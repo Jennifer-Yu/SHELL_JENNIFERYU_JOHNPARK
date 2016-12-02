@@ -3,13 +3,13 @@ JJSHELL
 by Jennifer Yu and John Park
 
 Features:
-- can parse
+- can parse with semi-colons
 - can exit
-- can deal with semi-colons
+- can cd
 
 Attempted:
 - redirection
-- cd
+- pipes
 
 Bugs:
 
