@@ -7,6 +7,7 @@ Features:
 - can fork and execute!
 - can exit!
 - can cd!
+- can redirectout!
 - can do pretty much anything and everything!! except, you know, everything
 
 Attempted:
@@ -16,6 +17,8 @@ Attempted:
 
 Bugs:
 - cd + space is supposed to bring you back to the home directory. but ours doesn't
+- redirectin has some serious issues!!
+- pipes aren't functional
 
 Files & Function Headers:
 
