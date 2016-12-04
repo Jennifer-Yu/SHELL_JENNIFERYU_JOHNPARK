@@ -114,66 +114,79 @@ int searcher(char *input[], char *search){
  *    by the sign. It will perform the approrpiate redirection before executing
  *    the command
 **/
-// void redir(* input){
-//   int pos;
-//   if ((pos = searcher(input, ">"))){
-//     char *temp = input[pos+1];
-//     input[pos] = 0;
-//     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-//     dup2 (fd, STDOUT_FILENO);
-//     forlpls (input);
-//   }
-//   else if((pos = searcher(input,">>"))){
-//     char *temp = input[pos+1];
-//     input[pos] = 0;
-//     int fd = open(temp, O_APPEND | O_CREAT | O_RDWR, 0644);
-//     dup2 (fd, STDOUT_FILENO);
-//     forkpls (input);
-//   }
-//   else if((pos = searcher(input,"2>"))){
-//     char *temp = input[ pos + 1];
-//     input[pos] = 0;
-//     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-//     dup2 (fd, STDERR_FILENO);
-//     forkpls(input);
-//   }
-//   else if( (pos = searcher(input,"&>")) ) {
-//     char *temp = input[ pos + 1];
-//     input[pos] = 0;
-//     int fd =open(temp, O_CREAT | O_RDWR, 0644);
-//     dup2 (fd, STDOUT_FILENO);
-//     dup2 (fd, STDERR_FILENO);
-//     forkpls (input);
-//   }
-//   else if( (pos = searcher(input,"<")) ) {
-//     char *temp = input[ pos + 1];
-//     input[pos] = 0;
-//     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-//     dup2(fd,STDIN_FILENO);
-//     forkpls(input);
-//   }
-//   else if((pos = searcher(input,"|"))) {
-//     char **temput = &input[pos+1];
-//     input[pos] = 0;
-//     int fds[2];
-//     pipe(fds);
-//   	int f2;
-//     f2 = fork();
-//     if(!f2){
-//       close( fds[0] );
-//   	  dup2( fds[1], STDOUT_FILENO );
-//   	  forkpls( input, f );
-//     }else{
-//   	  int timer
-//   	  wait(&timer);
-//   	  close(fds[1]);
-//   	  dup2(fds[0], STDIN_FILENO);
-//   	  forkpls(temput);
-//     }
-//   }
-// }
+ void redir(char *input[]){
+   int pos;
+   if ((pos = searcher(input, ">"))){
+     char *temp = (char *)input[pos+1];
+     input[pos] = 0;
+     int fd = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (fd, STDOUT_FILENO);
+     forkpls (input);
+   }
+   else if((pos = searcher(input,">>"))){
+     char *temp = input[pos+1];
+     input[pos] = 0;
+     int fd = open(temp, O_APPEND | O_CREAT | O_RDWR, 0644);
+     dup2 (fd, STDOUT_FILENO);
+     forkpls (input);
+   }
+   else if((pos = searcher(input,"2>"))){
+     char *temp = input[ pos + 1];
+     input[pos] = 0;
+     int fd = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (fd, STDERR_FILENO);
+     forkpls(input);
+   }
+   else if( (pos = searcher(input,"&>")) ) {
+     char *temp = input[ pos + 1];
+     input[pos] = 0;
+     int fd =open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (fd, STDOUT_FILENO);
+     dup2 (fd, STDERR_FILENO);
+     forkpls (input);
+   }
+   else if( (pos = searcher(input,"<")) ) {
+     char *temp = input[ pos + 1];
+     input[pos] = 0;
+     int fd = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2(fd,STDIN_FILENO);
+     forkpls(input);
+   }
+   else if((pos = searcher(input,"|"))) {
+     char **temput = &input[pos+1];
+     input[pos] = 0;
+     int fds[2];
+     pipe(fds);
+   	int f2;
+     f2 = fork();
+     if(!f2){
+       close( fds[0] );
+   	  dup2( fds[1], STDOUT_FILENO );
+   	  forkpls( input );
+     }else{
+   	  int timer;
+   	  wait(&timer);
+   	  close(fds[1]);
+   	  dup2(fds[0], STDIN_FILENO);
+   	  forkpls(temput);
+     }
+   }
+ }
 
 int main() {
+
+  /**
+
+  char *test[10];
+  test[0] = "omg";
+  test[1] = "yo";
+  test[2] = "ba";
+  test[3] = "ugh";
+  test[4] = "too";
+
+  printf("%d", searcher(test, "too"));
+
+  **/
 
   //INFINITE LOOP UNTIL YOU EXIT
   while (1) {
@@ -217,8 +230,8 @@ int main() {
       }
 
       //REDIRECTOUT
-      else if (strchr(c2[0], '>') || strchr(c2[0], '<') || strchr(c2[0], '|')) {
-      //redir(c2[0]);
+      else if ( !(strchr(c2[0], '>') || strchr(c2[0], '<') || strchr(c2[0], '|')) ) {
+        redir(c2);
       } else {
         //EXECUTE NORMALLY
   	    forkpls(c2);
