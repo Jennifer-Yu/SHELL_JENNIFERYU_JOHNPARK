@@ -39,3 +39,15 @@ char *fireblanks(char *input);
  * arguments: a string with terminal commands
  * return value: string without unnecessary spaces
  * function: gets rid of spaces so it can be executed
+ 
+int searcher(char *input[], char *search);
+ 
+ * Arguments: Command and the argument you are searching for
+ * Return value: location of the entered argument
+ * Function:Returns the index of the argument you are searching for, returns false otherwise
+ 
+void redir(* input);
+
+ * Arguments: The command you input
+ * Return value: N/A (it will run the command)
+ * Function: Searches the type of sign entered. Based on thatit will split the input by the sign. It will perform the approrpiate redirection before executing the command.
