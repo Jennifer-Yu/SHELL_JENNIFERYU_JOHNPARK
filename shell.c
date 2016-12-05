@@ -119,73 +119,74 @@ int searcher(char *input[], char *search){
    if ((pos = searcher(input, ">"))){
      char *temp = (char *)input[pos+1];
      input[pos] = 0;
-     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-     dup2 (fd, STDOUT_FILENO);
+     int twds = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (twds, STDOUT_FILENO);
      forkpls (input);
    }
    else if((pos = searcher(input,">>"))){
      char *temp = input[pos+1];
      input[pos] = 0;
-     int fd = open(temp, O_APPEND | O_CREAT | O_RDWR, 0644);
-     dup2 (fd, STDOUT_FILENO);
+     int twds = open(temp, O_APPEND | O_CREAT | O_RDWR, 0644);
+     dup2 (twds, STDOUT_FILENO);
      forkpls (input);
    }
    else if((pos = searcher(input,"2>"))){
      char *temp = input[ pos + 1];
      input[pos] = 0;
-     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-     dup2 (fd, STDERR_FILENO);
+     int twds = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (twds, STDERR_FILENO);
      forkpls(input);
    }
    else if( (pos = searcher(input,"&>")) ) {
      char *temp = input[ pos + 1];
      input[pos] = 0;
-     int fd =open(temp, O_CREAT | O_RDWR, 0644);
-     dup2 (fd, STDOUT_FILENO);
-     dup2 (fd, STDERR_FILENO);
+     int twds =open(temp, O_CREAT | O_RDWR, 0644);
+     dup2 (twds, STDOUT_FILENO);
+     dup2 (twds, STDERR_FILENO);
      forkpls (input);
    }
    else if( (pos = searcher(input,"<")) ) {
      char *temp = input[ pos + 1];
      input[pos] = 0;
-     int fd = open(temp, O_CREAT | O_RDWR, 0644);
-     dup2(fd,STDIN_FILENO);
+     int twds = open(temp, O_CREAT | O_RDWR, 0644);
+     dup2(twds,STDIN_FILENO);
      forkpls(input);
    }
    else if((pos = searcher(input,"|"))) {
-     char **temput = &input[pos+1];
+     char *temp = input[pos+1];
      input[pos] = 0;
-     int fds[2];
-     pipe(fds);
-   	int f2;
-     f2 = fork();
-     if(!f2){
-       close( fds[0] );
-   	  dup2( fds[1], STDOUT_FILENO );
-   	  forkpls( input );
-     }else{
-   	  int timer;
-   	  wait(&timer);
-   	  close(fds[1]);
-   	  dup2(fds[0], STDIN_FILENO);
-   	  forkpls(temput);
-     }
+     int twds[2];
+     pipe(twds);
+     int one = dup(STDOUT_FILENO);
+     int two = dup(STDIN_FILENO);
+     int f = fork();
+    if (f==0) {
+      close(twds[0]);
+      dup2(twds[1], STDOUT_FILENO);
+      close(twds[0]);
+      forkpls(input);
+      exit(0);
+    }else{
+      int mem;
+      wait(&mem);
+      dup2(twds[0], STDIN_FILENO);
+      close(twds[1]);
+      forkpls(input);
+      dup2(two, STDIN_FILENO);
+    }
    }
  }
 
 int main() {
 
   /**
-
   char *test[10];
   test[0] = "omg";
   test[1] = "yo";
   test[2] = "ba";
   test[3] = "ugh";
   test[4] = "too";
-
   printf("%d", searcher(test, "too"));
-
   **/
 
   //INFINITE LOOP UNTIL YOU EXIT
@@ -276,7 +277,6 @@ int main() {
 **/
 /**
     execvp(arr[0], arr);
-
     if (errno) {
       printf("Error %d: %s\n", errno, strerror(errno));
     }
@@ -285,29 +285,17 @@ int main() {
 char **tokensplit(char *input) {
   char **arr = (char **)(malloc(100));
   char *temp = input;
-
   int i = 0;
   while (temp) {
     arr[i] = strsep(&temp, " ");
     i++;
   }
   arr[i] = NULL;
-
   return arr;
 }
 **/
 /**
-void greaterThan(char *command){
-  char *file = (char *)malloc(256);
-  file = command [loc+1];
-  int fd = open(line, O_WRONLY | O_TRUNC | O_CREAT, 0644);
-  int ft = dup( STDOUT_FILENO );
-  dup2(fd, STDOUT_FILENO);
-  forkpls(file);
-  dup2(ft, STDOUT_FILENO);
-  close(fd);
-  free(file);
-}
+
 **/
 /**
   // IDK HOW TO IMPLEMENT THIS PROB NOT GONNA
