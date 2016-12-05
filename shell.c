@@ -231,8 +231,8 @@ int main() {
       }
 
       //REDIRECTOUT
-      else if ( !(strchr(c2[0], '>') || strchr(c2[0], '<') || strchr(c2[0], '|')) ) {
-        redir(c2);
+      else if ( (strchr(c2[0], '>') || strchr(c2[0], '<') || strchr(c2[0], '|')) ) {
+        redir(c2);  //IF YOU PUT A ! in front of the if statement, then it will work
       } else {
         //EXECUTE NORMALLY
   	    forkpls(c2);
