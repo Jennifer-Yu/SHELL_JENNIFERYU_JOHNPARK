@@ -18,7 +18,7 @@ Attempted:
 Bugs:
 - cd + space is supposed to bring you back to the home directory. but ours doesn't
 - redirectin has some serious issues!!
-- pipes aren't functional
+- pipes may not be functional
 
 Files & Function Headers:
 
