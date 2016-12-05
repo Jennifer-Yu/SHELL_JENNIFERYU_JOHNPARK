@@ -153,7 +153,7 @@ int searcher(char *input[], char *search){
      forkpls(input);
    }
    else if((pos = searcher(input,"|"))) {
-     char *temp = input[pos+1];
+     char **temp = &input[pos+1];
      input[pos] = 0;
      int twds[2];
      pipe(twds);
@@ -164,7 +164,7 @@ int searcher(char *input[], char *search){
       close(twds[0]);
       dup2(twds[1], STDOUT_FILENO);
       close(twds[0]);
-      forkpls(input);
+      forkpls(temp);
       exit(0);
     }else{
       int mem;
