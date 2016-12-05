@@ -7,7 +7,7 @@ Features:
 - can fork and execute!
 - can exit!
 - can cd!
-- can redirectout!
+- can redirectout! [ONLY WORKS IF YOU PUT THE ! IN FRONT OF THE CASE, DOES NOT WORK WITH CURRENT CODE]
 - can do pretty much anything and everything!! except, you know, everything
 
 Attempted:
